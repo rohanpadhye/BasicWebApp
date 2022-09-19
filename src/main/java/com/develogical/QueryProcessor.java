@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 public class QueryProcessor {
 
     public String process(String query) {
-        Pattern p = Pattern.compile("what is (\\d+) plus (\\d+)");
+        Pattern pAdd = Pattern.compile("what is (\\d+) plus (\\d+)");
+        Pattern pMul = Pattern.compile("what is (\\d+) multiplied by (\\d+)");
         Matcher matcher;
         if (query.toLowerCase().contains("shakespeare")) {
             return "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
@@ -15,12 +16,23 @@ public class QueryProcessor {
         } else if (query.toLowerCase().contains("name")) {
             return "Rohan";
         }
-        matcher = p.matcher(query.toLowerCase());
+        matcher = pAdd.matcher(query.toLowerCase());
         if (matcher.find()) {
             try {
                 int left = Integer.valueOf(matcher.group(1));
                 int right = Integer.valueOf(matcher.group(2));
                 return Integer.toString(left + right);
+            } catch (NumberFormatException e) {
+                // keep going
+            }
+        }
+
+        matcher = pMul.matcher(query.toLowerCase());
+        if (matcher.find()) {
+            try {
+                int left = Integer.valueOf(matcher.group(1));
+                int right = Integer.valueOf(matcher.group(2));
+                return Integer.toString(left * right);
             } catch (NumberFormatException e) {
                 // keep going
             }
