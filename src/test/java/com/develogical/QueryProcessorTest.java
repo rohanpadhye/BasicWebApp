@@ -36,11 +36,11 @@ public class QueryProcessorTest {
         assertThat(queryProcessor.process("what is 21 multiplied by 3"), containsString("63"));
     }
 
-//
-//    @Test
-//    public void canMax() throws Exception {
-//        assertThat(queryProcessor.process("which of the following numbers is the largest: 13, 21, 99, 1"),
-//                containsString("99"));
-//    }
+
+    @Test
+    public void canMax() throws Exception {
+        assertThat(queryProcessor.process("which of the following numbers is the largest: 13, 21, 99, 1"),
+                containsString("99"));
+    }
 
 }

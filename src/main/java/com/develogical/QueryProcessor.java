@@ -8,6 +8,7 @@ public class QueryProcessor {
     public String process(String query) {
         Pattern pAdd = Pattern.compile("what is (\\d+) plus (\\d+)");
         Pattern pMul = Pattern.compile("what is (\\d+) multiplied by (\\d+)");
+        Pattern pMax = Pattern.compile("which of the following numbers is the largest: (.*)");
         Matcher matcher;
         if (query.toLowerCase().contains("shakespeare")) {
             return "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
@@ -38,6 +39,22 @@ public class QueryProcessor {
             }
         }
 
+        matcher = pMax.matcher(query.toLowerCase());
+        if (matcher.find()) {
+            try {
+                String[] numbers = matcher.group(1).split(", ");
+                int max = Integer.MIN_VALUE;
+                for (String x : numbers) {
+                    int n = Integer.parseInt(x);
+                    if (n > max) {
+                        max = n;
+                    }
+                }
+                return Integer.toString(max);
+            } catch (NumberFormatException e) {
+                // keep going
+            }
+        }
 
 
         return "";
